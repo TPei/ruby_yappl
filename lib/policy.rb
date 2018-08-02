@@ -36,7 +36,7 @@ class Policy
   end
 
   def to_json
-    preferences = @rules.map { |rule| { rule: rule.to_json } }
+    preferences = @rules.map { |rule| { rule: rule.to_h } }
 
     {
       id: @id,

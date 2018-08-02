@@ -14,7 +14,7 @@ RSpec.describe Rule do
     end
   end
 
-  describe '#to_json' do
+  describe '#to_h' do
     it 'serializes appropriately' do
       time = Time.now
 
@@ -32,7 +32,7 @@ RSpec.describe Rule do
         expiration_date: time
       )
 
-      expect(rule.to_json).to eq({
+      expect(rule.to_h).to eq({
         purpose: {
           permitted: ['test1', 'test2'],
           excluded: ['test3'],
@@ -47,7 +47,7 @@ RSpec.describe Rule do
         }],
         valid_from: time.strftime('%FT%T.%LZ'),
         exp_date: time.strftime('%FT%T.%LZ')
-      }.to_json)
+      })
     end
   end
 end

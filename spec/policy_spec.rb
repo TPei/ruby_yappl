@@ -1,6 +1,7 @@
 require 'spec_helper'
 require 'policy'
 require 'rule'
+require 'json_validator'
 
 RSpec.describe Policy do
   describe '#archive_rule' do
@@ -28,8 +29,8 @@ RSpec.describe Policy do
   end
 
   describe '#to_json' do
-    it 'serializes appropriately' do
-      rule = Rule.new(
+    before do
+      @rule = Rule.new(
         id: 1,
         permitted_purposes: ['test1', 'test2'],
         excluded_purposes: ['test3'],
@@ -40,12 +41,20 @@ RSpec.describe Policy do
         expiration_date: Time.now
       )
 
-      policy = Policy.new(1, [rule])
+      @policy = Policy.new(1, [@rule])
+    end
 
-      expect(policy.to_json).to eq ({
+    it 'serializes appropriately' do
+      expect(@policy.to_json).to eq ({
         id: 1,
-        preference: [{ rule: rule.to_json }]
+        preference: [{ rule: @rule.to_h }]
       }.to_json)
+    end
+
+    it 'generated valid schema json' do
+      serialized = @policy.to_json
+      puts serialized
+      expect(JsonValidator.validate('yappl', serialized)).to eq true
     end
   end
 end

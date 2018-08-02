@@ -14,7 +14,7 @@ class Rule
     @expiration_date = Time.now
   end
 
-  def to_json
+  def to_h
     {
       purpose: {
         permitted: permitted_purposes,
@@ -27,6 +27,6 @@ class Rule
       transformation: transformations,
       valid_from: valid_from.strftime('%FT%T.%LZ'),
       exp_date: expiration_date.strftime('%FT%T.%LZ')
-    }.to_json
+    }
   end
 end
