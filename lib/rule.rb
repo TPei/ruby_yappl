@@ -15,6 +15,18 @@ class Rule
   end
 
   def to_json
-    # TODO: implement
+    {
+      purpose: {
+        permitted: permitted_purposes,
+        excluded: excluded_purposes
+      },
+      utilizer: {
+        permitted: permitted_utilizers,
+        excluded: excluded_utilizers
+      },
+      transformation: transformations,
+      valid_from: valid_from.strftime('%FT%T.%LZ'),
+      exp_date: expiration_date.strftime('%FT%T.%LZ')
+    }.to_json
   end
 end
