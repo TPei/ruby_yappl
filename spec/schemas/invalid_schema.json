@@ -10,8 +10,8 @@
           "attribute": "temperature",
           "tr_func": "minmax_hourly"
         }],
-        "valid_from": "2017−10−09T00:00:00.00Z",
-        "exp_date": "0000−00−00T00:00:00.00Z"
+        "valid_from": "2017-10-09T00:00:00.00Z",
+        "exp_date": "0000-01-01T00:00:00.000Z"
       }
     }
   ]
