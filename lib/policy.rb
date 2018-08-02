@@ -1,6 +1,10 @@
 class Policy
   attr_reader :rules
 
+  def initialize(rules)
+    @rules = rules
+  end
+
   def create_policy
     to_json
   end
@@ -22,10 +26,15 @@ class Policy
   end
 
   def archive_rule(rule_id)
-    # TODO: implement
+    rule = rules[rule_id]
+    rule.archive!
   end
 
   def update_rule(args)
+    # TODO: implement
+  end
+
+  def to_json
     # TODO: implement
   end
 end
