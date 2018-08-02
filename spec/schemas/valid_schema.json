@@ -1,0 +1,22 @@
+{
+  "id": 4493,
+  "preference": [{
+      "rule": {
+        "purpose": {
+          "permitted": ["statistics", "planology"],
+          "excluded": ["commercial"]
+        },
+        "utilizer": {
+          "permitted": ["wikimedia", "tu berlin"],
+          "excluded": ["netatmo", "gate5"]
+        },
+        "transformation": [{
+          "attribute": "temperature",
+          "tr_func": "minmax_hourly"
+        }],
+        "valid_from": "2017−10−09T00:00:00.00 Z",
+        "exp_date": "0000−00−00T00:00:00.00 Z"
+      }
+    }
+  ]
+}
