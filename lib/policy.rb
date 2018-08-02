@@ -1,7 +1,8 @@
 class Policy
   attr_reader :rules
 
-  def initialize(rules)
+  def initialize(id, rules)
+    @id = id
     @rules = rules
   end
 
@@ -35,6 +36,11 @@ class Policy
   end
 
   def to_json
-    # TODO: implement
+    preferences = @rules.map { |rule| { rule: rule.to_json } }
+
+    {
+      id: @id,
+      preference: preferences
+    }.to_json
   end
 end
