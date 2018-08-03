@@ -11,11 +11,11 @@ class Policy
   end
 
   def get_excluded_purpose
-    # TODO: implement
+    rules.map(&:excluded_purposes).flatten.uniq
   end
 
   def get_excluded_utilizer
-    # TODO: implement
+    rules.map(&:excluded_utilizers).flatten.uniq
   end
 
   def new_rule(args)

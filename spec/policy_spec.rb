@@ -80,4 +80,22 @@ RSpec.describe Policy do
       expect(policy.rules[-1].id).to eq 4
     end
   end
+
+  describe '#get_excluded_purpose' do
+    it 'returns a unique list of excluded purposes of all rules' do
+      rule1 = Rule.new(excluded_purposes: ['p1', 'p2'])
+      rule2 = Rule.new(excluded_purposes: ['p1', 'p3'])
+      policy = Policy.new(1, [rule1, rule2])
+      expect(policy.get_excluded_purpose).to eq ['p1', 'p2', 'p3']
+    end
+  end
+
+  describe '#get_excluded_utilizer' do
+    it 'returns a unique list of excluded utilizers of all rules' do
+      rule1 = Rule.new(excluded_utilizers: ['u1', 'u2'])
+      rule2 = Rule.new(excluded_utilizers: ['u1', 'u3'])
+      policy = Policy.new(1, [rule1, rule2])
+      expect(policy.get_excluded_utilizer).to eq ['u1', 'u2', 'u3']
+    end
+  end
 end
