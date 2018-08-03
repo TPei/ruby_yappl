@@ -52,4 +52,13 @@ class Policy
       preference: preferences
     }.to_json
   end
+
+  def rule_by_id(id)
+    matching_rules = rules.select { |rule| rule.id == id }
+    if matching_rules.count == 1
+      matching_rules.first
+    else
+      matching_rules
+    end
+  end
 end

@@ -119,4 +119,26 @@ RSpec.describe Policy do
       expect(old_rule.excluded_utilizers).to eq nil
     end
   end
+
+  describe '#rule_by_id' do
+    context 'with valid id' do
+      it 'returns matching rule' do
+        policy = Policy.new(1, [
+          Rule.new(id: 1), Rule.new(id: 4), Rule.new(id: 0)
+        ])
+        expect(policy.rule_by_id(4).id).to eq 4
+      end
+    end
+
+    context 'with id = -1' do
+      it 'returns all archived rules' do
+        policy = Policy.new(1, [
+          Rule.new(id: 1), Rule.new(id: 4), Rule.new(id: 0)
+        ])
+        policy.archive_rule(4)
+        policy.archive_rule(0)
+        expect(policy.rule_by_id(-1).count).to eq 2
+      end
+    end
+  end
 end
