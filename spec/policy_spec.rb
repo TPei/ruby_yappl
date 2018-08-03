@@ -158,4 +158,13 @@ RSpec.describe Policy do
       end
     end
   end
+
+  describe '#active_rules' do
+    it 'returns all not expired and not archived rules' do
+      active_rules = [Rule.new, Rule.new]
+      inactive_rules = [Rule.new(id: -1), Rule.new(expiration_date: Time.now - 1000)]
+      policy = Policy.new(1, active_rules + inactive_rules)
+      expect(policy.active_rules).to eq active_rules
+    end
+  end
 end

@@ -65,4 +65,8 @@ class Policy
   def archived_rules
     rules.select { |rule| rule.id == -1 }
   end
+
+  def active_rules
+    rules.select { |rule| rule.id != -1 && !rule.expired? }
+  end
 end
