@@ -57,4 +57,27 @@ RSpec.describe Policy do
       expect(JsonValidator.validate('yappl', serialized)).to eq true
     end
   end
+
+  describe '#new_rule' do
+    it 'creates a new rule and calls #add_rule' do
+      policy = Policy.new(1, [])
+      time = Time.now
+      args = { excluded_purposes: ['test1'], valid_from: time }
+      expect(Rule).to receive(:new).with(args).and_return(rule = double)
+      expect(policy).to receive(:add_rule).with rule
+      policy.new_rule(args)
+    end
+  end
+
+  describe '#add_rule' do
+    it 'appends a rule to the rules array and sets the id appropriately' do
+      rule_one = Rule.new(id: 1)
+      rule_three = Rule.new(id: 3)
+      policy = Policy.new(1, [rule_one, rule_three])
+      rule = Rule.new
+      policy.add_rule(rule)
+      expect(policy.rules.count).to eq 3
+      expect(policy.rules[-1].id).to eq 4
+    end
+  end
 end

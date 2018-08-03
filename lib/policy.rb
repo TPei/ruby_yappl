@@ -19,7 +19,13 @@ class Policy
   end
 
   def new_rule(args)
-    # TODO: implement
+    add_rule Rule.new(args)
+  end
+
+  def add_rule(rule)
+    max_id = rules.map(&:id).max
+    rule.id = max_id + 1
+    rules << rule
   end
 
   def get_tr_rules # rename?
