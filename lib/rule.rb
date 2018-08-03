@@ -7,6 +7,8 @@ class Rule
     args.each do |key, value|
       self.instance_variable_set("@#{key}".to_sym, value)
     end
+    @valid_from = Time.now unless valid_from
+    @expiration_date = Time.new(0, 1, 1) unless expiration_date
   end
 
   def archive!

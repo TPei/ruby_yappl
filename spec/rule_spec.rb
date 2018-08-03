@@ -30,6 +30,14 @@ RSpec.describe Rule do
       expect(rule.valid_from).to eq time
       expect(rule.expiration_date).to eq time
     end
+
+    context 'with no valid_from and expiration_date provided' do
+      it 'sets defaults values' do
+        rule = Rule.new
+        expect(rule.valid_from).not_to eq nil
+        expect(rule.expiration_date).to eq Time.new(0, 1, 1)
+      end
+    end
   end
 
   describe '#archive!' do
