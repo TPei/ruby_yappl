@@ -141,4 +141,21 @@ RSpec.describe Policy do
       end
     end
   end
+
+  describe '#archived_rules' do
+    context 'with archived rules' do
+      it 'returns all archived rules' do
+        rules = [Rule.new(id: -1), Rule.new(id: -1)]
+        policy = Policy.new(1, rules)
+        expect(policy.archived_rules).to eq(rules)
+      end
+    end
+
+    context 'with no archived rules' do
+      it 'returns an empty array' do
+        policy = Policy.new(1, [])
+        expect(policy.archived_rules).to eq []
+      end
+    end
+  end
 end

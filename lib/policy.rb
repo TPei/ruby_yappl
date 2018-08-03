@@ -61,4 +61,8 @@ class Policy
       matching_rules
     end
   end
+
+  def archived_rules
+    rules.select { |rule| rule.id == -1 }
+  end
 end
