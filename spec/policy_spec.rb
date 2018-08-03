@@ -109,11 +109,11 @@ RSpec.describe Policy do
       }
       policy.update_rule(5, args)
       expect(policy.rules.count).to eq 2
-      new_rule = policy.rules.select { |rule| rule.id == 5 }.first
+      new_rule = policy.rule_by_id(5)
       expect(new_rule.id).to eq 5
       expect(new_rule.excluded_purposes).to eq ['p2']
       expect(new_rule.excluded_utilizers).to eq ['u1']
-      old_rule = policy.rules.select { |rule| rule.id == -1 }.first
+      old_rule = policy.rule_by_id(-1)
       expect(old_rule.id).to eq -1
       expect(old_rule.excluded_purposes).to eq ['p1']
       expect(old_rule.excluded_utilizers).to eq nil

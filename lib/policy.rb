@@ -33,7 +33,7 @@ class Policy
   end
 
   def archive_rule(rule_id)
-    rule = rules.select { |rule| rule.id == rule_id }.first
+    rule = rule_by_id(rule_id)
     rule.archive!
   end
 
