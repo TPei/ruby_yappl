@@ -88,4 +88,28 @@ RSpec.describe Rule do
       })
     end
   end
+
+  describe '#expired?' do
+    context 'with expiration_date set to default' do
+      it 'returns false' do
+        rule = Rule.new
+        expect(rule.expired?).to eq false
+      end
+    end
+
+    context 'with expiration_date set in past' do
+      it 'returns true' do
+        rule = Rule.new(expiration_date: Time.new(2000, 1, 1))
+        expect(rule.expired?).to eq true
+      end
+    end
+
+    context 'with expiration_date set in future' do
+      it 'returns false' do
+        # have fun with this in a thousand years :D
+        rule = Rule.new(expiration_date: Time.new(3000, 1, 1))
+        expect(rule.expired?).to eq false
+      end
+    end
+  end
 end
