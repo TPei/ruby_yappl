@@ -6,9 +6,9 @@ require 'json_validator'
 RSpec.describe Policy do
   describe '#archive_rule' do
     it 'calls #archive! on appropriate rule' do
-      rule_number_one = Rule.new(id: 1)
+      rule_number_one = Rule.new(id: 4)
       rules = [
-        Rule.new(id: 0),
+        Rule.new(id: 7),
         rule_number_one,
         Rule.new(id: 2)
       ]
@@ -16,7 +16,7 @@ RSpec.describe Policy do
       policy = Policy.new(1, rules)
 
       expect(rule_number_one).to receive(:archive!)
-      policy.archive_rule(1)
+      policy.archive_rule(4)
     end
   end
 
