@@ -37,8 +37,11 @@ class Policy
     rule.archive!
   end
 
-  def update_rule(args)
-    # TODO: implement
+  def update_rule(id, args)
+    archive_rule(id)
+    rule = Rule.new(args)
+    rule.id = id
+    rules << rule
   end
 
   def to_json

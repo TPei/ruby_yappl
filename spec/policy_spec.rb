@@ -98,4 +98,25 @@ RSpec.describe Policy do
       expect(policy.get_excluded_utilizer).to eq ['u1', 'u2', 'u3']
     end
   end
+
+  describe '#update_rule' do
+    it 'updates a rule with new args and archives the old one' do
+      old_rule = Rule.new(id: 5, excluded_purposes: ['p1'])
+      policy = Policy.new(1, [old_rule])
+      args = {
+        excluded_purposes: ['p2'],
+        excluded_utilizers: ['u1']
+      }
+      policy.update_rule(5, args)
+      expect(policy.rules.count).to eq 2
+      new_rule = policy.rules.select { |rule| rule.id == 5 }.first
+      expect(new_rule.id).to eq 5
+      expect(new_rule.excluded_purposes).to eq ['p2']
+      expect(new_rule.excluded_utilizers).to eq ['u1']
+      old_rule = policy.rules.select { |rule| rule.id == -1 }.first
+      expect(old_rule.id).to eq -1
+      expect(old_rule.excluded_purposes).to eq ['p1']
+      expect(old_rule.excluded_utilizers).to eq nil
+    end
+  end
 end
