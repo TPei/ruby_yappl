@@ -29,7 +29,13 @@ class Policy
   end
 
   def get_tr_rules # rename?
-    # TODO: implement
+    active_rules.map do |rule|
+      Rule.new( # return as hash?
+        permitted_purposes: rule.permitted_purposes,
+        permitted_utilizers: rule.permitted_utilizers,
+        transformations: rule.transformations
+      )
+    end
   end
 
   def archive_rule(rule_id)

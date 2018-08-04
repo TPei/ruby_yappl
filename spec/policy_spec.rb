@@ -167,4 +167,54 @@ RSpec.describe Policy do
       expect(policy.active_rules).to eq active_rules
     end
   end
+
+  describe '#get_tr_rules' do
+    it 'returns active rules with permitted purp/util and transformations' do
+      active_rules = [
+        Rule.new(
+          id: 1,
+          permitted_purposes: ['p1'],
+          permitted_utilizers: ['u1'],
+          transformations: [{
+            attribute: 'temperature',
+            tr_func: 'minmax_hourly'
+          }],
+          excluded_utilizers: ['u2']
+        ),
+        Rule.new(
+          id: 2,
+          permitted_purposes: ['p2'],
+          permitted_utilizers: ['u3'],
+          transformations: [{
+            attribute: 'step_count',
+            tr_func: 'minmax_hourly'
+          }],
+          excluded_utilizers: ['u4'],
+          excluded_purposes: ['p2'],
+          valid_from: Time.now,
+          expiration_date: Time.new(0, 1, 1)
+        )
+      ]
+      inactive_rules = [Rule.new(id: -1), Rule.new(expiration_date: Time.now - 1000)]
+      policy = Policy.new(1, active_rules + inactive_rules)
+      expect(policy.get_tr_rules.map(&:to_h)).to eq ([
+        Rule.new(
+          permitted_purposes: ['p1'],
+          permitted_utilizers: ['u1'],
+          transformations: [{
+            attribute: 'temperature',
+            tr_func: 'minmax_hourly'
+          }]
+        ),
+        Rule.new(
+          permitted_purposes: ['p2'],
+          permitted_utilizers: ['u3'],
+          transformations: [{
+            attribute: 'step_count',
+            tr_func: 'minmax_hourly'
+          }]
+        )
+      ].map(&:to_h))
+    end
+  end
 end
