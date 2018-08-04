@@ -197,24 +197,24 @@ RSpec.describe Policy do
       ]
       inactive_rules = [Rule.new(id: -1), Rule.new(expiration_date: Time.now - 1000)]
       policy = Policy.new(1, active_rules + inactive_rules)
-      expect(policy.get_tr_rules.map(&:to_h)).to eq ([
-        Rule.new(
+      expect(policy.get_tr_rules).to eq ([
+        {
           permitted_purposes: ['p1'],
           permitted_utilizers: ['u1'],
           transformations: [{
             attribute: 'temperature',
             tr_func: 'minmax_hourly'
           }]
-        ),
-        Rule.new(
+        },
+        {
           permitted_purposes: ['p2'],
           permitted_utilizers: ['u3'],
           transformations: [{
             attribute: 'step_count',
             tr_func: 'minmax_hourly'
           }]
-        )
-      ].map(&:to_h))
+        }
+      ])
     end
   end
 end

@@ -30,11 +30,11 @@ class Policy
 
   def get_tr_rules # rename?
     active_rules.map do |rule|
-      Rule.new( # return as hash?
+      {
         permitted_purposes: rule.permitted_purposes,
         permitted_utilizers: rule.permitted_utilizers,
         transformations: rule.transformations
-      )
+      }
     end
   end
 
