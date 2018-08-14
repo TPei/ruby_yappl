@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'rule'
 
-RSpec.describe Rule do
+RSpec.describe YaPPL::Rule do
   describe '#initialize' do
     it 'sets all given attributes' do
       time = Time.now
@@ -17,7 +17,7 @@ RSpec.describe Rule do
         expiration_date: time
       }
 
-      rule = Rule.new(args)
+      rule = YaPPL::Rule.new(args)
       expect(rule.id).to eq 1
       expect(rule.permitted_purposes).to eq ['p1']
       expect(rule.excluded_purposes).to eq ['p2']
@@ -33,7 +33,7 @@ RSpec.describe Rule do
 
     context 'with no valid_from and expiration_date provided' do
       it 'sets defaults values' do
-        rule = Rule.new
+        rule = YaPPL::Rule.new
         expect(rule.valid_from).not_to eq nil
         expect(rule.expiration_date).to eq Time.new(0, 1, 1)
       end
@@ -43,7 +43,7 @@ RSpec.describe Rule do
   describe '#archive!' do
     it 'sets expiration_date to now and id to -1' do
       set_time = Time.now - 100_000_000
-      rule = Rule.new(id: 100, expiration_date: set_time)
+      rule = YaPPL::Rule.new(id: 100, expiration_date: set_time)
 
       rule.archive!
 
@@ -56,7 +56,7 @@ RSpec.describe Rule do
     it 'serializes appropriately' do
       time = Time.now
 
-      rule = Rule.new(
+      rule = YaPPL::Rule.new(
         id: 1,
         permitted_purposes: ['test1', 'test2'],
         excluded_purposes: ['test3'],
@@ -92,14 +92,14 @@ RSpec.describe Rule do
   describe '#expired?' do
     context 'with expiration_date set to default' do
       it 'returns false' do
-        rule = Rule.new
+        rule = YaPPL::Rule.new
         expect(rule.expired?).to eq false
       end
     end
 
     context 'with expiration_date set in past' do
       it 'returns true' do
-        rule = Rule.new(expiration_date: Time.new(2000, 1, 1))
+        rule = YaPPL::Rule.new(expiration_date: Time.new(2000, 1, 1))
         expect(rule.expired?).to eq true
       end
     end
@@ -107,7 +107,7 @@ RSpec.describe Rule do
     context 'with expiration_date set in future' do
       it 'returns false' do
         # have fun with this in a thousand years :D
-        rule = Rule.new(expiration_date: Time.new(3000, 1, 1))
+        rule = YaPPL::Rule.new(expiration_date: Time.new(3000, 1, 1))
         expect(rule.expired?).to eq false
       end
     end

@@ -3,17 +3,17 @@ require 'policy'
 require 'rule'
 require 'json_validator'
 
-RSpec.describe Policy do
+RSpec.describe YaPPL::Policy do
   describe '#archive_rule' do
     it 'calls #archive! on appropriate rule' do
-      rule_number_one = Rule.new(id: 4)
+      rule_number_one = YaPPL::Rule.new(id: 4)
       rules = [
-        Rule.new(id: 7),
+        YaPPL::Rule.new(id: 7),
         rule_number_one,
-        Rule.new(id: 2)
+        YaPPL::Rule.new(id: 2)
       ]
 
-      policy = Policy.new(1, rules)
+      policy = YaPPL::Policy.new(1, rules)
 
       expect(rule_number_one).to receive(:archive!)
       policy.archive_rule(4)
@@ -22,7 +22,7 @@ RSpec.describe Policy do
 
   describe '#create_policy' do
     it 'calls #to_json' do
-      policy = Policy.new(1, [])
+      policy = YaPPL::Policy.new(1, [])
       expect(policy).to receive(:to_json)
       policy.create_policy
     end
@@ -30,7 +30,7 @@ RSpec.describe Policy do
 
   describe '#to_json' do
     before do
-      @rule = Rule.new(
+      @rule = YaPPL::Rule.new(
         id: 1,
         permitted_purposes: ['test1', 'test2'],
         excluded_purposes: ['test3'],
@@ -41,7 +41,7 @@ RSpec.describe Policy do
         expiration_date: Time.now
       )
 
-      @policy = Policy.new(1, [@rule])
+      @policy = YaPPL::Policy.new(1, [@rule])
     end
 
     it 'serializes appropriately' do
@@ -60,10 +60,10 @@ RSpec.describe Policy do
 
   describe '#new_rule' do
     it 'creates a new rule and calls #add_rule' do
-      policy = Policy.new(1, [])
+      policy = YaPPL::Policy.new(1, [])
       time = Time.now
       args = { excluded_purposes: ['test1'], valid_from: time }
-      expect(Rule).to receive(:new).with(args).and_return(rule = double)
+      expect(YaPPL::Rule).to receive(:new).with(args).and_return(rule = double)
       expect(policy).to receive(:add_rule).with rule
       policy.new_rule(args)
     end
@@ -71,10 +71,10 @@ RSpec.describe Policy do
 
   describe '#add_rule' do
     it 'appends a rule to the rules array and sets the id appropriately' do
-      rule_one = Rule.new(id: 1)
-      rule_three = Rule.new(id: 3)
-      policy = Policy.new(1, [rule_one, rule_three])
-      rule = Rule.new
+      rule_one = YaPPL::Rule.new(id: 1)
+      rule_three = YaPPL::Rule.new(id: 3)
+      policy = YaPPL::Policy.new(1, [rule_one, rule_three])
+      rule = YaPPL::Rule.new
       policy.add_rule(rule)
       expect(policy.rules.count).to eq 3
       expect(policy.rules[-1].id).to eq 4
@@ -83,26 +83,26 @@ RSpec.describe Policy do
 
   describe '#get_excluded_purpose' do
     it 'returns a unique list of excluded purposes of all rules' do
-      rule1 = Rule.new(excluded_purposes: ['p1', 'p2'])
-      rule2 = Rule.new(excluded_purposes: ['p1', 'p3'])
-      policy = Policy.new(1, [rule1, rule2])
+      rule1 = YaPPL::Rule.new(excluded_purposes: ['p1', 'p2'])
+      rule2 = YaPPL::Rule.new(excluded_purposes: ['p1', 'p3'])
+      policy = YaPPL::Policy.new(1, [rule1, rule2])
       expect(policy.get_excluded_purpose).to eq ['p1', 'p2', 'p3']
     end
   end
 
   describe '#get_excluded_utilizer' do
     it 'returns a unique list of excluded utilizers of all rules' do
-      rule1 = Rule.new(excluded_utilizers: ['u1', 'u2'])
-      rule2 = Rule.new(excluded_utilizers: ['u1', 'u3'])
-      policy = Policy.new(1, [rule1, rule2])
+      rule1 = YaPPL::Rule.new(excluded_utilizers: ['u1', 'u2'])
+      rule2 = YaPPL::Rule.new(excluded_utilizers: ['u1', 'u3'])
+      policy = YaPPL::Policy.new(1, [rule1, rule2])
       expect(policy.get_excluded_utilizer).to eq ['u1', 'u2', 'u3']
     end
   end
 
   describe '#update_rule' do
     it 'updates a rule with new args and archives the old one' do
-      old_rule = Rule.new(id: 5, excluded_purposes: ['p1'])
-      policy = Policy.new(1, [old_rule])
+      old_rule = YaPPL::Rule.new(id: 5, excluded_purposes: ['p1'])
+      policy = YaPPL::Policy.new(1, [old_rule])
       args = {
         excluded_purposes: ['p2'],
         excluded_utilizers: ['u1']
@@ -123,8 +123,8 @@ RSpec.describe Policy do
   describe '#rule_by_id' do
     context 'with valid id' do
       it 'returns matching rule' do
-        policy = Policy.new(1, [
-          Rule.new(id: 1), Rule.new(id: 4), Rule.new(id: 0)
+        policy = YaPPL::Policy.new(1, [
+          YaPPL::Rule.new(id: 1), YaPPL::Rule.new(id: 4), YaPPL::Rule.new(id: 0)
         ])
         expect(policy.rule_by_id(4).id).to eq 4
       end
@@ -132,8 +132,8 @@ RSpec.describe Policy do
 
     context 'with id = -1' do
       it 'returns all archived rules' do
-        policy = Policy.new(1, [
-          Rule.new(id: 1), Rule.new(id: 4), Rule.new(id: 0)
+        policy = YaPPL::Policy.new(1, [
+          YaPPL::Rule.new(id: 1), YaPPL::Rule.new(id: 4), YaPPL::Rule.new(id: 0)
         ])
         policy.archive_rule(4)
         policy.archive_rule(0)
@@ -145,15 +145,15 @@ RSpec.describe Policy do
   describe '#archived_rules' do
     context 'with archived rules' do
       it 'returns all archived rules' do
-        rules = [Rule.new(id: -1), Rule.new(id: -1)]
-        policy = Policy.new(1, rules)
+        rules = [YaPPL::Rule.new(id: -1), YaPPL::Rule.new(id: -1)]
+        policy = YaPPL::Policy.new(1, rules)
         expect(policy.archived_rules).to eq(rules)
       end
     end
 
     context 'with no archived rules' do
       it 'returns an empty array' do
-        policy = Policy.new(1, [])
+        policy = YaPPL::Policy.new(1, [])
         expect(policy.archived_rules).to eq []
       end
     end
@@ -161,9 +161,9 @@ RSpec.describe Policy do
 
   describe '#active_rules' do
     it 'returns all not expired and not archived rules' do
-      active_rules = [Rule.new, Rule.new]
-      inactive_rules = [Rule.new(id: -1), Rule.new(expiration_date: Time.now - 1000)]
-      policy = Policy.new(1, active_rules + inactive_rules)
+      active_rules = [YaPPL::Rule.new, YaPPL::Rule.new]
+      inactive_rules = [YaPPL::Rule.new(id: -1), YaPPL::Rule.new(expiration_date: Time.now - 1000)]
+      policy = YaPPL::Policy.new(1, active_rules + inactive_rules)
       expect(policy.active_rules).to eq active_rules
     end
   end
@@ -171,7 +171,7 @@ RSpec.describe Policy do
   describe '#get_tr_rules' do
     it 'returns active rules with permitted purp/util and transformations' do
       active_rules = [
-        Rule.new(
+        YaPPL::Rule.new(
           id: 1,
           permitted_purposes: ['p1'],
           permitted_utilizers: ['u1'],
@@ -181,7 +181,7 @@ RSpec.describe Policy do
           }],
           excluded_utilizers: ['u2']
         ),
-        Rule.new(
+        YaPPL::Rule.new(
           id: 2,
           permitted_purposes: ['p2'],
           permitted_utilizers: ['u3'],
@@ -195,8 +195,8 @@ RSpec.describe Policy do
           expiration_date: Time.new(0, 1, 1)
         )
       ]
-      inactive_rules = [Rule.new(id: -1), Rule.new(expiration_date: Time.now - 1000)]
-      policy = Policy.new(1, active_rules + inactive_rules)
+      inactive_rules = [YaPPL::Rule.new(id: -1), YaPPL::Rule.new(expiration_date: Time.now - 1000)]
+      policy = YaPPL::Policy.new(1, active_rules + inactive_rules)
       expect(policy.get_tr_rules).to eq ([
         {
           permitted_purposes: ['p1'],
