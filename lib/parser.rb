@@ -1,8 +1,3 @@
-require 'policy'
-require 'rule'
-require 'exceptions'
-require 'json'
-
 module YaPPL
   class Parser
     def self.parse(json)
