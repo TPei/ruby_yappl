@@ -27,7 +27,7 @@ RSpec.describe YaPPL::Parser do
         expect(rule.transformations.count).to eq 1
         expect(rule.transformations[0]['attribute']). to eq 'temperature'
         expect(rule.transformations[0]['tr_func']). to eq 'minmax_hourly'
-        expect(rule.valid_from).to eq Time.parse('2017-10-09t00:00:00.00z')
+        expect(rule.valid_from).to eq Time.parse('2017-10-09T00:00:00.000Z')
         expect(rule.expiration_date).to eq Time.parse('0000-01-01T00:00:00.000Z')
       end
     end
