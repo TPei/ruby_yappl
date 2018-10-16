@@ -4,6 +4,28 @@ require 'rule'
 require 'json_validator'
 
 RSpec.describe YaPPL::Policy do
+  describe '.from_policy_file' do
+    it 'uses the parser' do
+      json = File.read('./spec/schemas/valid_schema.json')
+      expect(YaPPL::Parser).to receive(:parse).with(json)
+      YaPPL::Policy.from_policy_file(json)
+    end
+
+    it 'returns a Policy' do
+      json = File.read('./spec/schemas/valid_schema.json')
+      policy = YaPPL::Policy.from_policy_file(json)
+      expect(policy.class).to eq YaPPL::Policy
+    end
+  end
+
+  describe 'parse and serialize' do
+    it 'creates the same file again' do
+      json = File.read('./spec/schemas/valid_schema.json')
+      policy = YaPPL::Policy.from_policy_file(json)
+      expect(policy.create_policy).to eq JSON.parse(json).to_json
+    end
+  end
+
   describe '#archive_rule' do
     it 'calls #archive! on appropriate rule' do
       rule_number_one = YaPPL::Rule.new(id: 4)

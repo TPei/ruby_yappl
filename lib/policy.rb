@@ -7,6 +7,10 @@ module YaPPL
       @rules = rules
     end
 
+    def self.from_policy_file(json)
+      Parser.parse(json)
+    end
+
     def create_policy
       to_json
     end
