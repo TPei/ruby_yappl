@@ -1,6 +1,6 @@
 module YaPPL
   class Policy
-    attr_reader :rules
+    attr_reader :id, :rules
 
     def initialize(id, rules)
       @id = id

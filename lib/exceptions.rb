@@ -1,0 +1,1 @@
+class SchemaError < StandardError; end
