@@ -1,5 +1,9 @@
 # Ruby Library for YaPPL
 
+[![Build Status](https://travis-ci.com/TPei/ruby_yappl.svg?branch=master)](https://travis-ci.com/TPei/ruby_yappl)
+[![Gem Version](https://badge.fury.io/rb/ruby_yappl.svg)](https://rubygems.org/gems/ruby_yappl)
+[![Release](https://img.shields.io/github/release/tpei/ruby_yappl.svg)](https://github.com/TPei/ruby_yappl/releases)
+
 ## What is YaPPL?
 
 YaPPL is a Privacy Preference Language (see [YaPPL](https://github.com/maroulb/YaPPL))
