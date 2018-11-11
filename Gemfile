@@ -1,4 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'rspec'
+group :test, :development do
+  gem 'rspec'
+end
+
 gem 'json-schema'
