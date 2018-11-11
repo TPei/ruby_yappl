@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = 'ruby_yappl'
-  s.version = '0.1.0'
+  s.version = '0.1.1'
   s.date = '2018-10-16'
   s.summary = 'ruby gem for the yappl privacy preference language'
   s.authors = ['Thomas Peikert']
