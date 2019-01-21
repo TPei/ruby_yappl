@@ -1,19 +1,13 @@
 Gem::Specification.new do |s|
   s.name = 'ruby_yappl'
-  s.version = '0.1.1'
-  s.date = '2018-10-16'
+  s.version = '0.1.3'
+  s.date = '2019-01-21'
   s.summary = 'ruby gem for the yappl privacy preference language'
   s.authors = ['Thomas Peikert']
   s.email = 't.s.peikert+yappl@gmail.com'
-  s.homepage = 'http://rubygems.org/gems/ruby_yappl'
+  s.homepage = 'https://github.com/TPei/ruby_yappl'
   s.license = 'MIT'
-  s.files = [
-    'lib/ruby_yappl.rb',
-    'lib/parser.rb',
-    'lib/policy.rb',
-    'lib/rule.rb',
-    'lib/exceptions.rb',
-    'lib/json_validator.rb'
-  ]
+  s.files = `git ls-files`.split($/)
   s.require_paths = ['lib']
+  s.add_dependency('json-schema', '~> 2.8')
 end
