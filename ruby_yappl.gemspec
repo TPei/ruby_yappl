@@ -11,7 +11,9 @@ Gem::Specification.new do |s|
     'lib/ruby_yappl.rb',
     'lib/parser.rb',
     'lib/policy.rb',
-    'lib/rule.rb'
+    'lib/rule.rb',
+    'lib/exceptions.rb',
+    'lib/json_validator.rb'
   ]
   s.require_paths = ['lib']
 end
