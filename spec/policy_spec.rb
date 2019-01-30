@@ -214,7 +214,7 @@ RSpec.describe YaPPL::Policy do
           excluded_utilizers: ['u4'],
           excluded_purposes: ['p2'],
           valid_from: Time.now,
-          expiration_date: Time.new(0, 1, 1)
+          expiration_date: Time.utc(0, 1, 1)
         )
       ]
       inactive_rules = [YaPPL::Rule.new(id: -1), YaPPL::Rule.new(expiration_date: Time.now - 1000)]
@@ -222,7 +222,9 @@ RSpec.describe YaPPL::Policy do
       expect(policy.get_tr_rules).to eq ([
         {
           permitted_purposes: ['p1'],
+          excluded_purposes: nil,
           permitted_utilizers: ['u1'],
+          excluded_utilizers: ['u2'],
           transformations: [{
             attribute: 'temperature',
             tr_func: 'minmax_hourly'
@@ -230,7 +232,9 @@ RSpec.describe YaPPL::Policy do
         },
         {
           permitted_purposes: ['p2'],
+          excluded_purposes: ['p2'],
           permitted_utilizers: ['u3'],
+          excluded_utilizers: ['u4'],
           transformations: [{
             attribute: 'step_count',
             tr_func: 'minmax_hourly'

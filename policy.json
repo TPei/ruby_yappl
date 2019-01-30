@@ -1,0 +1,36 @@
+{
+  "id": 4493,
+    "preference": [
+        {
+            "rule": {
+                "exp_date": "0000-01-01T00:00:00.000Z",
+                "purpose": {
+                    "excluded": [
+                        "*.Phone.*"
+                    ],
+                    "permitted": [
+                        "*.Direct.*"
+                    ]
+                },
+                "transformation": [
+                    {
+                        "attribute": "temperature",
+                        "tr_func": "minmax_hourly"
+                    }
+                ],
+                "utilizer": {
+                    "excluded": [
+                        "*.Business.*",
+                        "*.Charite"
+                    ],
+                    "permitted": [
+                        "*.Non-Profit.*",
+                        "*.Research.*",
+                        "*.University.TU Berlin"
+                    ]
+                },
+                "valid_from": "2017-10-09T00:00:00.000Z"
+            }
+        }
+    ]
+}

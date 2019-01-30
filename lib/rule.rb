@@ -40,7 +40,7 @@ module YaPPL
     private
 
     def default_time
-      Time.new(0, 1, 1)
+      Time.utc(0, 1, 1)
     end
   end
 end

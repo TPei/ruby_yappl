@@ -37,7 +37,9 @@ module YaPPL
       active_rules.map do |rule|
         {
           permitted_purposes: rule.permitted_purposes,
+          excluded_purposes: rule.excluded_purposes,
           permitted_utilizers: rule.permitted_utilizers,
+          excluded_utilizers: rule.excluded_utilizers,
           transformations: rule.transformations
         }
       end

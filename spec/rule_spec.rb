@@ -35,7 +35,7 @@ RSpec.describe YaPPL::Rule do
       it 'sets defaults values' do
         rule = YaPPL::Rule.new
         expect(rule.valid_from).not_to eq nil
-        expect(rule.expiration_date).to eq Time.new(0, 1, 1)
+        expect(rule.expiration_date).to eq Time.utc(0, 1, 1)
       end
     end
   end
